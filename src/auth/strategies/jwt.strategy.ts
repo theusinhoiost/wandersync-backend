@@ -23,7 +23,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
     async validate(payload: JWTPayload) {
-        const user = await this.userService.findByid(payload.sub);
+        const user = await this.userService.findByID(payload.sub);
 
         if (!user || user.forceLogout) {
             throw new UnauthorizedException('Você precisa fazer login')

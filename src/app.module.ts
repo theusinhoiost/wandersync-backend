@@ -5,13 +5,15 @@ import { UserModule } from './users/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
-import { GraphsModule } from './graphs/graphs.module';
-import { SpendsModule } from './spends/spends.module';
 import { NewsModule } from './news/news.module';
+import { TripsModule } from './trips/trips.module';
+import { DatabaseModule } from './database/database.module';
+
 
 
 @Module({
   imports: [
+    DatabaseModule,
     UserModule,
     ConfigModule.forRoot({
       isGlobal: true,
@@ -32,8 +34,7 @@ import { NewsModule } from './news/news.module';
     }),
     AuthModule,
     NewsModule,
-    SpendsModule,
-    GraphsModule,],
+    TripsModule],
   controllers: [AppController],
   providers: [AppService],
 })

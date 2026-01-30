@@ -22,9 +22,9 @@ export class AuthService {
             throw new UnauthorizedException('Credenciais inválidas');
         }
         const jwtPayload: JWTPayload = { sub: user.id, email: user.email };
-        const accessToken = await this.jwtService.signAsync(jwtPayload);
+        const access_token = await this.jwtService.signAsync(jwtPayload);
         user.forceLogout = false;
         await this.userService.save(user);
-        return { accessToken };
+        return { access_token };
     }
 }

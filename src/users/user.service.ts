@@ -12,25 +12,16 @@ export class UserService {
         private readonly userRepository: Repository<User>,
         private readonly hashingService: HashingService,
     ) { }
-
     async create(dto: CreateUserDto) {
-        const existsEmail = await this.userRepository.exists({
-            where: { email: dto.email },
-        });
-
-        const existsPhone = await this.userRepository.exists({
-            where: { phone: dto.phone },
-        });
+        const existsEmail = await this.userRepository.exists({ where: { email: dto.email } });
+        const existsPhone = await this.userRepository.exists({ where: { phone: dto.phone } });
 
         if (existsEmail || existsPhone) {
-            throw new ConflictException(
-                "Email ou telefone já cadastrado",
-            );
+            throw new ConflictException("Email ou telefone já cadastrado");
         }
 
-        const hashedPassword = await this.hashingService.hash(
-            dto.password,
-        );
+        const hashedPassword = await this.hashingService.hash(dto.password);
+
 
         const user = this.userRepository.create({
             name: dto.name,
@@ -42,11 +33,20 @@ export class UserService {
 
 
         const savedUser = await this.userRepository.save(user);
+        const check = await this.userRepository.findOneBy({ id: savedUser.id });
+        console.log('CHECK NO MESMO BD:', check);
 
+        console.log("DEBUG BACKEND - Usuário salvo:", savedUser);
 
-        const { password, ...result } = savedUser as User;
-        return result;
+        return {
+            id: savedUser.id,
+            name: savedUser.name,
+            email: savedUser.email,
+            phone: savedUser.phone,
+            avatarUrl: savedUser.avatarUrl,
+            createdAt: savedUser.createdAt,
 
+        };
     }
 
     findByEmail(email: string) {

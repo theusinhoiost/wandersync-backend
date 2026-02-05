@@ -1,6 +1,7 @@
 import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateNewsDto {
+
     @IsString({ message: 'O título deve ser um texto válido' })
     @IsNotEmpty({ message: 'O título não pode estar vazio' })
     title: string;

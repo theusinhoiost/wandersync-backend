@@ -4,6 +4,7 @@ import {
     IsNotEmpty,
     IsMobilePhone,
     IsOptional,
+    MinLength,
 } from "class-validator";
 
 export class CreateUserDto {
@@ -16,6 +17,7 @@ export class CreateUserDto {
 
     @IsString({ message: "A senha deve ser válida" })
     @IsNotEmpty({ message: "A senha não pode estar vazia" })
+    @MinLength(6, { message: "A senha deve ter no mínimo 6 caracteres" })
     password: string;
 
     @IsMobilePhone("pt-BR")

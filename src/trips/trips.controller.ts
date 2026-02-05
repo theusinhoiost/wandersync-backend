@@ -5,6 +5,8 @@ import { TripsService } from './trips.service';
 import { TripStatsResponseDto } from './dto/trip-stats-response.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+
+
 @ApiTags('Viagens')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
